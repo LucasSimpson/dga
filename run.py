@@ -1,8 +1,9 @@
 from game.ga import GA2048
 
 
-g = GA2048(pop_size=10)
-m = g.generation()
+g = GA2048(pop_size=50)
 
-print(m.fitness)
+while True:
+    m = g.generation()
+    print(m.fitness)
 

@@ -90,7 +90,7 @@ class Board(object):
         return hasChanged
 
     def deep_copy(self):
-        g = Game()
+        g = Board()
         g.state = self.state[:]
         g.score = self.score
         g.stale_count = self.stale_count
