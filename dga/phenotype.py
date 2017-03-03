@@ -1,3 +1,5 @@
+from __future__ import division
+
 from dga.model import Model
 from .genotype import Genotype
 

@@ -1,3 +1,5 @@
+from __future__ import division
+
 import random
 
 import copy
@@ -71,5 +73,5 @@ class Genotype:
         return self.gene.__len__()
 
     def __str__(self):
-        return f'G#{self.gene[:min(6, len(self.gene))]}{"..." if len(self.gene) > 6 else ""}'
+        return 'G#{}{}'.format(self.gene[:min(6, len(self.gene))], "..." if len(self.gene) > 6 else "")
 

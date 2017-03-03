@@ -1,10 +1,10 @@
-import random
+from __future__ import division
+
 import numpy as np
 
 from dga.genetic_algo import GeneticAlgorithm
 from dga.model import Model
 from dga.phenotype import Phenotype
-
 from .board import Board
 
 
@@ -69,7 +69,7 @@ class Model2048(Model):
     gene_size = 676
 
     def __init__(self, genotype=None):
-        super().__init__(genotype)
+        Model.__init__(self, genotype)
         self.nn = NeuralNetwork.from_genotype(self.genotype)
 
     def evaluate(self, data_in):
@@ -82,10 +82,10 @@ class Phenotype2048(Phenotype):
     model_class = Model2048
 
     def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+        Phenotype.__init__(self, *args, **kwargs)
 
     def infer(self, data_in):
-        odds = super().infer(data_in)
+        odds = super(self, Phenotype2048).infer(data_in)
         return np.argmax(odds)
 
     def play_game(self):
@@ -124,4 +124,4 @@ def run():
     while m.fitness < 1000:
         gen += 1
         m = g.generation()
-        print(f'Gen {gen}: {g.fitness()} :: {g.average()}')
+        print('Gen {}: {} :: {}'.format(gen, g.fitness(), g.average()))

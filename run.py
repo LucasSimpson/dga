@@ -1,3 +1,3 @@
-from game_2048 import run
+from xor import run
 
 run()

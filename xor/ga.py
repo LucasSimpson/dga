@@ -1,3 +1,5 @@
+from __future__ import division
+
 import numpy as np
 
 from dga.genetic_algo import GeneticAlgorithm
@@ -68,7 +70,7 @@ class ModelXOR(Model):
     gene_size = 12
 
     def __init__(self, genotype=None):
-        super().__init__(genotype)
+        Model.__init__(self, genotype)
         self.nn = NeuralNetwork.from_genotype(self.genotype)
 
     def evaluate(self, data_in):
@@ -81,10 +83,10 @@ class PhenotypeXOR(Phenotype):
     model_class = ModelXOR
 
     def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+        Phenotype.__init__(self, *args, **kwargs)
 
     def infer(self, data_in):
-        odds = super().infer(data_in)
+        odds = Phenotype.infer(self, data_in)
         return np.argmax(odds)
 
     def get_fitness(self):
@@ -120,7 +122,7 @@ def run():
     while (m.fitness != 16):
         gen += 1
         m = g.generation()
-        print(f'Gen {gen}: {g.fitness()} :: {g.average()}')
+        print('Gen {}: {} :: {}'.format(gen, g.fitness(), g.average()))
 
     print(m.infer([0, 0]))
     print(m.infer([1, 1]))

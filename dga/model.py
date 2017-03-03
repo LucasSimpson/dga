@@ -1,3 +1,4 @@
+from __future__ import division
 
 class Model:
     """Constructed from a genotype; the realization from a genotype."""

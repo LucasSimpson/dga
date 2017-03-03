@@ -1,3 +1,5 @@
+from __future__ import division
+
 import copy
 import numpy as np
 
@@ -27,7 +29,7 @@ class GeneticAlgorithm:
         for pheno in self.pop:
             pass  # print(pheno.fitness)
 
-    def generation(self) -> Phenotype:
+    def generation(self):
         """Evolve a new generation. Returns the fittest model."""
 
         # create copy of population, clear current pop
