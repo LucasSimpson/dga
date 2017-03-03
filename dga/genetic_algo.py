@@ -8,6 +8,7 @@ class GeneticAlgorithm:
     """Decribes a high level genetic algorithm."""
 
     model_class = Phenotype
+    elitist_keep = 10
 
     def __init__(self, pop_size=100):
         self.pop_size = pop_size
@@ -25,24 +26,24 @@ class GeneticAlgorithm:
         for pheno in self.pop:
             pass  # print(pheno.fitness)
 
-    def generation(self, num_keep=20) -> Phenotype:
+    def generation(self) -> Phenotype:
         """Evolve a new generation. Returns the fittest model."""
 
         # create copy of population, clear current pop
         self.old_pop = copy.deepcopy(self.pop)
         self.pop = list()
 
-        for a in range(num_keep):
+        for a in range(self.elitist_keep):
             self.pop.append(self.old_pop[a])
 
         # breed, roulette algo, pop_size iters
         total = sum([pheno.fitness for pheno in self.pop])
         probs = [pheno.fitness / total for pheno in self.pop]
-        for i in range(int((self.pop_size - num_keep)/2)):
+        for i in range(int((self.pop_size - self.elitist_keep)/2)):
 
             # TODO randomly select
-            id1 = np.random.choice(num_keep, p=probs)
-            id2 = np.random.choice(num_keep, p=probs)
+            id1 = np.random.choice(self.elitist_keep, p=probs)
+            id2 = np.random.choice(self.elitist_keep, p=probs)
 
             child1, child2 = self.pop[id1].breed(self.pop[id2])
             self.pop.append(child1)

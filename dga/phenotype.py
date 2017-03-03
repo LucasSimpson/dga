@@ -1,18 +1,19 @@
+import copy
 import random
 
-import copy
-
-from .nn import NeuralNetwork
+from dga.model import Model
 from .genotype import Genotype
 
 
 class Phenotype:
     """Describes a tasks model. Used for inference."""
 
+    model_class = Model
+
     def __init__(self, genotype=None):
         self.fitness = None
-        self.genotype = genotype if genotype else Genotype.random(676)  # size of NN TODO generalize
-        self.nn = NeuralNetwork.from_genotype(self.genotype)
+        self.genotype = genotype if genotype else Genotype.random(self.model_class.gene_size)
+        self.model = self.model_class(self.genotype)
 
     @classmethod
     def from_random(cls):
@@ -56,13 +57,16 @@ class Phenotype:
         if random.random() <= mutation_odds:
             g2[random.randint(0, len(g2)-1)] = random.random()
 
+        g1 = Genotype.from_gene(g1)
+        g2 = Genotype.from_gene(g2)
+
         return self.__class__.from_genotype(g1), self.__class__.from_genotype(g2)
 
     def get_fitness(self):
         raise NotImplemented()
 
     def infer(self, data_in):
-        return self.nn.infer(data_in)
+        return self.model.evaluate(data_in)
 
     def __lt__(self, other):
         """For sorting by fitness descending."""

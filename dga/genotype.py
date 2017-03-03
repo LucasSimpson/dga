@@ -20,6 +20,14 @@ class Genotype:
 
         return g
 
+    @staticmethod
+    def from_gene(gene):
+        """Returns a genotype with a specific gene."""
+
+        g = Genotype(len(gene))
+        g.gene = gene
+        return g
+
     def __deepcopy__(self, memodict={}):
         genotype = Genotype(self.size)
         genotype.gene = copy.deepcopy(self.gene)
@@ -38,5 +46,5 @@ class Genotype:
         return self.gene.__len__()
 
     def __str__(self):
-        return f'G#{self.gene[:4]}...'
+        return f'G#{self.gene[:min(6, len(self.gene))]}{"..." if len(self.gene) > 6 else ""}'
 
