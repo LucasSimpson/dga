@@ -1,9 +1,3 @@
-from game.ga import GA2048
+from xor import run
 
-
-g = GA2048(pop_size=50)
-
-while True:
-    m = g.generation()
-    print(m.fitness)
-
+run()

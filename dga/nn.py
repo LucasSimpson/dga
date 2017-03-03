@@ -15,8 +15,6 @@ class NeuralNetwork:
     def from_genotype(genotype):
         """Construct a neural network from the genotype."""
 
-        # TODO implement
-
         nn = NeuralNetwork()
         i = 0
         for a in range(16):

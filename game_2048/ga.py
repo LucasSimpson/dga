@@ -4,11 +4,11 @@ import numpy as np
 from dga.genetic_algo import GeneticAlgorithm
 from dga.phenotype import Phenotype
 
-from .game import Board
+from .board import Board
 
 
 class Phenotype2048(Phenotype):
-    """Model specific for 2048 game."""
+    """Model specific for 2048 game_2048."""
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -37,5 +37,10 @@ class GA2048(GeneticAlgorithm):
     model_class = Phenotype2048
 
 
+def run():
+    g = GA2048(pop_size=50)
 
+    while True:
+        m = g.generation()
+        print(m.fitness)
 

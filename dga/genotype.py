@@ -1,11 +1,14 @@
 import random
 
+import copy
+
 
 class Genotype:
     """Defines a genotype."""
 
     def __init__(self, size):
-        self.gene = [0 for a in range(size)]  # TODO use bytes not char
+        self.size = size
+        self.gene = [0 for a in range(self.size)]  # TODO use bytes not char
 
     @staticmethod
     def random(size):
@@ -16,6 +19,11 @@ class Genotype:
             g.gene[i] = random.random()
 
         return g
+
+    def __deepcopy__(self, memodict={}):
+        genotype = Genotype(self.size)
+        genotype.gene = copy.deepcopy(self.gene)
+        return genotype
 
     def __getitem__(self, item):
         return self.gene.__getitem__(item)

@@ -1,5 +1,7 @@
 import random
 
+import copy
+
 from .nn import NeuralNetwork
 from .genotype import Genotype
 
@@ -29,11 +31,11 @@ class Phenotype:
 
         self.fitness = self.get_fitness()
 
-    def breed(self, other, mutation_odds=0.05):
+    def breed(self, other, mutation_odds=0.2):
         """Breeds two phenotypes together. Returns a tuple of the two 'children'."""
 
-        g1 = self.genotype
-        g2 = other.genotype
+        g1 = copy.deepcopy(self.genotype)
+        g2 = copy.deepcopy(other.genotype)
 
         assert(len(g1) == len(g2))
 
@@ -69,6 +71,6 @@ class Phenotype:
         return self.fitness > other.fitness
 
     def __deepcopy__(self, memodict={}):
-        c = self.__class__()
+        c = self.__class__(self.genotype)
         c.fitness = self.fitness
         return c

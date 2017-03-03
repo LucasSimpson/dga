@@ -25,7 +25,7 @@ class GeneticAlgorithm:
         for pheno in self.pop:
             pass  # print(pheno.fitness)
 
-    def generation(self, num_keep=10) -> Phenotype:
+    def generation(self, num_keep=20) -> Phenotype:
         """Evolve a new generation. Returns the fittest model."""
 
         # create copy of population, clear current pop
@@ -35,18 +35,16 @@ class GeneticAlgorithm:
         for a in range(num_keep):
             self.pop.append(self.old_pop[a])
 
-
-
         # breed, roulette algo, pop_size iters
-        total = sum([pheno.fitness for pheno in self.old_pop])
-        probs = [pheno.fitness / total for pheno in self.old_pop]
+        total = sum([pheno.fitness for pheno in self.pop])
+        probs = [pheno.fitness / total for pheno in self.pop]
         for i in range(int((self.pop_size - num_keep)/2)):
 
             # TODO randomly select
-            id1 = np.random.choice(self.pop_size, p=probs)
-            id2 = np.random.choice(self.pop_size, p=probs)
+            id1 = np.random.choice(num_keep, p=probs)
+            id2 = np.random.choice(num_keep, p=probs)
 
-            child1, child2 = self.old_pop[id1].breed(self.old_pop[id2])
+            child1, child2 = self.pop[id1].breed(self.pop[id2])
             self.pop.append(child1)
             self.pop.append(child2)
 
@@ -55,6 +53,16 @@ class GeneticAlgorithm:
 
         # return phenotype with highest fitness
         return self.pop[0]
+
+    def fitness(self):
+        """Return highest fitness in population."""
+
+        return self.pop[0].fitness
+
+    def average(self):
+        """Return average fitness of population."""
+
+        return sum(pheno.fitness for pheno in self.pop) / self.pop_size
 
 if __name__ == '__main__':
     a = GeneticAlgorithm()
