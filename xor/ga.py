@@ -114,7 +114,7 @@ class GAXOR(GeneticAlgorithm):
 
 
 def run():
-    g = GAXOR(pop_size=50)
+    g = GAXOR(pop_size=20)
 
     gen = 0
     m = g.generation()

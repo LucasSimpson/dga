@@ -32,30 +32,10 @@ class Phenotype:
 
         self.fitness = self.get_fitness()
 
-    def breed(self, other, mutation_odds=0.2):
+    def breed(self, other, mutation_odds=0.1):
         """Breeds two phenotypes together. Returns a tuple of the two 'children'."""
 
-        g1 = copy.deepcopy(self.genotype)
-        g2 = copy.deepcopy(other.genotype)
-
-        assert(len(g1) == len(g2))
-
-        size = len(g1)
-        pivot = random.randint(0, size-1)
-
-        a1 = g1[:pivot]
-        a2 = g1[pivot:]
-        b1 = g2[:pivot]
-        b2 = g2[pivot:]
-
-        g1 = a1 + b2
-        g2 = a2 + b1
-
-        if random.random() <= mutation_odds:
-            g1[random.randint(0, len(g1)-1)] = random.random()
-
-        if random.random() <= mutation_odds:
-            g2[random.randint(0, len(g2)-1)] = random.random()
+        g1, g2 = self.genotype.breed(other.genotype, mutation_odds)
 
         g1 = Genotype.from_gene(g1)
         g2 = Genotype.from_gene(g2)

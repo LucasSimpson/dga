@@ -8,7 +8,7 @@ class Genotype:
 
     def __init__(self, size):
         self.size = size
-        self.gene = [0 for a in range(self.size)]  # TODO use bytes not char
+        self.gene = [0 for a in range(self.size)]
 
     @staticmethod
     def random(size):
@@ -27,6 +27,28 @@ class Genotype:
         g = Genotype(len(gene))
         g.gene = gene
         return g
+
+    def breed(self, other, mutation_odds):
+        """Breed two genotypes together."""
+
+        x1 = copy.deepcopy(self.gene)
+        x2 = copy.deepcopy(other.gene)
+
+        assert (len(x1) == len(x2))
+
+        size = len(x1)
+        pivot = random.randint(0, size - 1)
+
+        g1 = x1[:pivot] + x2[pivot:]
+        g2 = x2[:pivot] + x1[pivot:]
+
+        if random.random() <= mutation_odds:
+            g1[random.randint(0, len(g1) - 1)] = random.random()
+
+        if random.random() <= mutation_odds:
+            g2[random.randint(0, len(g2) - 1)] = random.random()
+
+        return g1, g2
 
     def __deepcopy__(self, memodict={}):
         genotype = Genotype(self.size)
