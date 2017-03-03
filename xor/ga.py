@@ -6,13 +6,13 @@ from dga.phenotype import Phenotype
 
 
 class NeuralNetwork:
-    """Start by defining simple FC NN with layer sizes (2, 4, 2, 1). vars=8+4+8+2=22"""
+    """Start by defining simple FC NN with layer sizes (2, 2, 2, 1). vars=4+2+4+2=12"""
 
     def __init__(self):
-        self.l1 = np.random.rand(2, 4)
-        self.b1 = np.random.rand(1, 4)
+        self.l1 = np.random.rand(2, 2)
+        self.b1 = np.random.rand(1, 2)
 
-        self.l2 = np.random.rand(4, 2)
+        self.l2 = np.random.rand(2, 2)
         self.b2 = np.random.rand(1, 2)
 
     @staticmethod
@@ -22,15 +22,15 @@ class NeuralNetwork:
         nn = NeuralNetwork()
         i = 0
         for a in range(2):
-            for b in range(4):
+            for b in range(2):
                 nn.l1[a][b] = genotype[i]
                 i += 1
 
-        for a in range(4):
+        for a in range(2):
             nn.b1 [0][a] = genotype[i]
             i += 1
 
-        for a in range(4):
+        for a in range(2):
             for b in range(2):
                 nn.l2[a][b] = genotype[i]
                 i += 1
@@ -65,7 +65,7 @@ class NeuralNetwork:
 class ModelXOR(Model):
     """Simple model for XOR problem."""
 
-    gene_size = 22
+    gene_size = 12
 
     def __init__(self, genotype=None):
         super().__init__(genotype)
@@ -112,9 +112,8 @@ class GAXOR(GeneticAlgorithm):
     elitist_keep = 10
 
 
-
 def run():
-    g = GAXOR(pop_size=20)
+    g = GAXOR(pop_size=1000)
 
     gen = 0
     m = g.generation()
@@ -123,8 +122,8 @@ def run():
         m = g.generation()
         print(f'Gen {gen}: {g.fitness()} :: {g.average()}')
 
-    print(m.evaluate([0, 0]))
-    print(m.evaluate([1, 1]))
-    print(m.evaluate([1, 0]))
-    print(m.evaluate([0, 1]))
+    print(m.infer([0, 0]))
+    print(m.infer([1, 1]))
+    print(m.infer([1, 0]))
+    print(m.infer([0, 1]))
 

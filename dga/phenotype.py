@@ -32,7 +32,7 @@ class Phenotype:
 
         self.fitness = self.get_fitness()
 
-    def breed(self, other, mutation_odds=0.1):
+    def breed(self, other, mutation_odds=0.2):
         """Breeds two phenotypes together. Returns a tuple of the two 'children'."""
 
         g1, g2 = self.genotype.breed(other.genotype, mutation_odds)
