@@ -75,6 +75,7 @@ class Model2048(Model):
     def evaluate(self, data_in):
         return self.nn.infer(data_in)
 
+
 class Phenotype2048(Phenotype):
     """Model specific for 2048 game_2048."""
 
@@ -87,18 +88,25 @@ class Phenotype2048(Phenotype):
         odds = super().infer(data_in)
         return np.argmax(odds)
 
-    def get_fitness(self):
-
+    def play_game(self):
         b = Board()
-        moves = ['w','a','s','d']
+        moves = ['w', 'a', 's', 'd']
 
         while not b.is_stale():
-
             # TODO serialize board and use as input
             m = self.infer(b.state)
             b.process_move(moves[m])
 
         return b.score
+
+    def get_fitness(self):
+
+        # play 10 games, return average
+        sum = 0
+        for a in range(10):
+            sum += self.play_game()
+
+        return sum / 10
 
 
 class GA2048(GeneticAlgorithm):
@@ -109,9 +117,11 @@ class GA2048(GeneticAlgorithm):
 
 
 def run():
-    g = GA2048(pop_size=50)
+    g = GA2048(pop_size=200)
 
-    while True:
+    gen = 0
+    m = g.generation()
+    while m.fitness < 1000:
+        gen += 1
         m = g.generation()
-        print(m.fitness)
-
+        print(f'Gen {gen}: {g.fitness()} :: {g.average()}')

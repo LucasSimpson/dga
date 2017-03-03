@@ -1,6 +1,3 @@
-import copy
-import random
-
 from dga.model import Model
 from .genotype import Genotype
 
@@ -32,15 +29,17 @@ class Phenotype:
 
         self.fitness = self.get_fitness()
 
-    def breed(self, other, mutation_odds=0.2):
+    def breed(self, other):
         """Breeds two phenotypes together. Returns a tuple of the two 'children'."""
 
-        g1, g2 = self.genotype.breed(other.genotype, mutation_odds)
-
-        g1 = Genotype.from_gene(g1)
-        g2 = Genotype.from_gene(g2)
+        g1, g2 = self.genotype.crossover(other.genotype)
 
         return self.__class__.from_genotype(g1), self.__class__.from_genotype(g2)
+
+    def mutate(self, mutation_odds):
+        """Mutate self's genotype."""
+
+        self.genotype.mutate(mutation_odds)
 
     def get_fitness(self):
         raise NotImplemented()

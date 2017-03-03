@@ -16,7 +16,7 @@ class Genotype:
 
         g = Genotype(size)
         for i in range(len(g.gene)):
-            g.gene[i] = random.random()
+            g.gene[i] = random.normalvariate(0, 1)  # mean=0, var=1
 
         return g
 
@@ -28,8 +28,8 @@ class Genotype:
         g.gene = gene
         return g
 
-    def breed(self, other, mutation_odds):
-        """Breed two genotypes together."""
+    def crossover(self, other):
+        """Crossover two genotypes together."""
 
         x1 = copy.deepcopy(self.gene)
         x2 = copy.deepcopy(other.gene)
@@ -42,13 +42,16 @@ class Genotype:
         g1 = x1[:pivot] + x2[pivot:]
         g2 = x2[:pivot] + x1[pivot:]
 
-        if random.random() <= mutation_odds:
-            g1[random.randint(0, len(g1) - 1)] = random.random()
+        return self.from_gene(g1), self.from_gene(g2)
 
-        if random.random() <= mutation_odds:
-            g2[random.randint(0, len(g2) - 1)] = random.random()
+    def mutate(self, mutation_odds):
+        """Mutate our genotype. Each gene is mutated with odds mutation_odds/len(self)."""
 
-        return g1, g2
+        p = mutation_odds / len(self.gene)
+
+        for i in range(len(self.gene)):
+            if random.random() <= p:
+                self.gene[i] = random.normalvariate(0, 1)  # mean=0, var=1
 
     def __deepcopy__(self, memodict={}):
         genotype = Genotype(self.size)
