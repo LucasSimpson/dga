@@ -22,6 +22,7 @@ class GeneticAlgorithm:
         """Evaluates all phenotypes and sorts accordinly."""
 
         for pheno in self.pop:
+            # TODO start thread for this call
             pheno.evaluate()
 
         self.pop.sort()

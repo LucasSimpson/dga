@@ -1,0 +1,3 @@
+#!/bin/bash
+
+aws lambda create-function --function-name "test-function-001" --runtime python2.7 --role arn:aws:iam::371553215809:role/lambda_basic_execution --handler run.handler --description "A test function" --timeout 3 --memory-size 128 --no-publish --zip-file fileb://./code.zip

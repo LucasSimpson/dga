@@ -12,11 +12,11 @@ class Genotype:
         self.size = size
         self.gene = [0 for a in range(self.size)]
 
-    @staticmethod
-    def random(size):
+    @classmethod
+    def random(cls, size):
         """Return a random genotype."""
 
-        g = Genotype(size)
+        g = cls(size)
         for i in range(len(g.gene)):
             g.gene[i] = random.normalvariate(0, 1)  # mean=0, var=1
 
@@ -56,7 +56,7 @@ class Genotype:
                 self.gene[i] = random.normalvariate(0, 1)  # mean=0, var=1
 
     def __deepcopy__(self, memodict={}):
-        genotype = Genotype(self.size)
+        genotype = self.__class__(self.size)
         genotype.gene = copy.deepcopy(self.gene)
         return genotype
 

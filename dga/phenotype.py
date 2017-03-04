@@ -8,17 +8,18 @@ class Phenotype:
     """Describes a tasks model. Used for inference."""
 
     model_class = Model
+    genotype_class = Genotype
 
     def __init__(self, genotype=None):
         self.fitness = None
-        self.genotype = genotype if genotype else Genotype.random(self.model_class.gene_size)
+        self.genotype = genotype if genotype else self.genotype_class.random(self.model_class.gene_size)
         self.model = self.model_class(self.genotype)
 
     @classmethod
     def from_random(cls):
         """Returns a new Phenotype with random initial parameters."""
 
-        return cls()
+        return cls(genotype=None)
 
     @classmethod
     def from_genotype(cls, genotype):
@@ -29,6 +30,7 @@ class Phenotype:
     def evaluate(self):
         """Evaluate the model."""
 
+        # TODO refactor
         self.fitness = self.get_fitness()
 
     def breed(self, other):
