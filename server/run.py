@@ -1,6 +1,6 @@
 import json
 
-from xor import XOR
+from xor import Game2048
 
 
 def handler(params, lambda_):
@@ -9,20 +9,23 @@ def handler(params, lambda_):
     json_data = json.loads(json_str)
 
     # build phenotype
-    xor_solver = XOR(json_data['weights'])
+    xor_solver = Game2048(json_data['weights'])
 
     # evaluate
-    fitness = xor_solver.evaluate()
+    score = 0
+    for i in range(10):
+        score += xor_solver.evaluate()
 
-    return fitness
+    return score / 10
 
 if __name__ == '__main__':
-    import random
+    import random, math
 
-    w = {'weights': [random.random() * 0.1 - 0.2 for i in range(12)]}
+    for a in range (50):
+        w = {'weights': [random.normalvariate(0, 1) for i in range(Game2048.size)]}
 
-    p = {
-        'json': json.dumps(w)
-    }
+        p = {
+            'json': json.dumps(w)
+        }
 
-    print(handler(p, None))
+        print(math.sqrt(handler(p, None)))

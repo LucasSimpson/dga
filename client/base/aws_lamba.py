@@ -37,11 +37,13 @@ class FitnessCall(threading.Thread):
         return self.result
 
 
-import random
 
-calls = [FitnessCall([random.random() * 2 - 1 for i in range(12)]) for i in range(100)]
+if __name__ == '__main__':
+    import random, math
 
-[c() for c in calls]
+    calls = [FitnessCall([random.normalvariate(0, 1) for i in range(340)]) for i in range(50)]
 
-for c in calls:
-    print(c.get_fitness())
+    [c() for c in calls]
+
+    for c in calls:
+        print(math.sqrt(int(c.get_fitness())))
