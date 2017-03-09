@@ -8,7 +8,6 @@ class NeuralNetwork:
     size = 12
 
     def __init__(self):
-        pass
         self.l1 = Matrix(2, 2)
         self.b1 = Matrix(1, 2)
         self.l2 = Matrix(2, 2)
@@ -53,16 +52,15 @@ class NeuralNetwork:
         """Push data_in through network and give results."""
 
         l3 = Matrix.from_list([data_in]) * self.l1 + self.b1
-        l3 = NeuralNetwork._logistic(l3)
+        # l3 = NeuralNetwork._logistic(l3)
 
         l3 = l3 * self.l2 + self.b2
-        l3 = NeuralNetwork._logistic(l3)
+        # l3 = NeuralNetwork._logistic(l3)
 
         e = [math.exp(elem) for elem in l3[0]]
         s = sum(e)
 
         odds = [elem / s for elem in e]
-
         return 0 if odds[0] > odds[1] else 1
 
 
@@ -80,7 +78,6 @@ class XOR:
 
         score = 0
         for test in tests:
-            print test, self.nn.infer(test[0])
             score += self.nn.infer(test[0]) == test[1]
 
         return score ** 2

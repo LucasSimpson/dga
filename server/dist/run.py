@@ -17,16 +17,12 @@ def handler(params, lambda_):
     return fitness
 
 if __name__ == '__main__':
-    weights = {
-        'weights': [
-            1, 2, 3, 4,
-            -1, -2, -3, -4,
-            -4, -3, -2, -1
-        ]
-    }
+    import random
+
+    w = {'weights': [random.random() * 0.1 - 0.2 for i in range(12)]}
 
     p = {
-        'json': json.dumps(weights)
+        'json': json.dumps(w)
     }
 
     print(handler(p, None))
