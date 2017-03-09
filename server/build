@@ -1,0 +1,30 @@
+#!/bin/bash
+
+
+# remove current archive
+if [ -f dist.zip ]; then
+    rm dist.zip
+fi
+
+
+# make dist directory if it doesnt exist
+if [ ! -d "dist" ]; then
+  mkdir dist
+fi
+
+
+# clear current contents
+cd dist
+rm -rf *
+cd ..
+
+
+# copy files into dist
+cp *.py dist/
+cp -r venv/lib/python2.7/site-packages/* dist/
+
+
+# create zip archive
+cd dist
+zip -r ../dist.zip *
+

@@ -1,3 +1,10 @@
+*.pyc
+
 old/venv/
 old/.idea
-*.pyc
+
+server/venv/
+server/.idea/
+
+client/venv/
+client/.idea/
